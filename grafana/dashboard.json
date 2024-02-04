@@ -1,0 +1,893 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 1,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "humidity"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 7,
+          "x": 0,
+          "y": 0
+        },
+        "id": 14,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "8.4.5",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "postgres"
+            },
+            "format": "time_series",
+            "group": [
+              {
+                "params": [
+                  "1h",
+                  "previous"
+                ],
+                "type": "time"
+              }
+            ],
+            "metricColumn": "city_name",
+            "rawQuery": false,
+            "rawSql": "SELECT\n  $__timeGroupAlias(start_timestamp,1h,previous),\n  city_name AS metric,\n  avg(humidity_difference) AS \"humidity_difference\"\nFROM weather_data\nGROUP BY 1,2\nORDER BY 1,2",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "humidity_difference"
+                  ],
+                  "type": "column"
+                },
+                {
+                  "params": [
+                    "avg"
+                  ],
+                  "type": "aggregate"
+                },
+                {
+                  "params": [
+                    "humidity_difference"
+                  ],
+                  "type": "alias"
+                }
+              ]
+            ],
+            "table": "weather_data",
+            "timeColumn": "start_timestamp",
+            "timeColumnType": "timestamptz",
+            "where": []
+          }
+        ],
+        "title": "humidity_difference",
+        "transparent": true,
+        "type": "gauge"
+      },
+      {
+        "gridPos": {
+          "h": 3,
+          "w": 7,
+          "x": 10,
+          "y": 0
+        },
+        "id": 10,
+        "options": {
+          "content": "<p style=\"font-size:300%;font-weight:Bold ;color:#CD5C5C;\">Weather Data</p>",
+          "mode": "html"
+        },
+        "pluginVersion": "8.4.5",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "velocityms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 7,
+          "x": 17,
+          "y": 0
+        },
+        "id": 16,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "8.4.5",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "postgres"
+            },
+            "format": "time_series",
+            "group": [
+              {
+                "params": [
+                  "1h",
+                  "none"
+                ],
+                "type": "time"
+              }
+            ],
+            "metricColumn": "city_name",
+            "rawQuery": false,
+            "rawSql": "SELECT\n  $__timeGroupAlias(start_timestamp,1h),\n  city_name AS metric,\n  avg(wind_speed_difference) AS \"wind_speed_difference\"\nFROM weather_data\nGROUP BY 1,2\nORDER BY 1,2",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "wind_speed_difference"
+                  ],
+                  "type": "column"
+                },
+                {
+                  "params": [
+                    "avg"
+                  ],
+                  "type": "aggregate"
+                },
+                {
+                  "params": [
+                    "wind_speed_difference"
+                  ],
+                  "type": "alias"
+                }
+              ]
+            ],
+            "table": "weather_data",
+            "timeColumn": "start_timestamp",
+            "timeColumnType": "timestamptz",
+            "where": []
+          }
+        ],
+        "title": "windspeed_difference",
+        "transparent": true,
+        "type": "gauge"
+      },
+      {
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "axisSoftMin": 0,
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "fahrenheit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 9,
+          "x": 8,
+          "y": 3
+        },
+        "id": 12,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "orientation": "auto",
+          "showValue": "auto",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "postgres"
+            },
+            "format": "time_series",
+            "group": [
+              {
+                "params": [
+                  "1h",
+                  "none"
+                ],
+                "type": "time"
+              }
+            ],
+            "metricColumn": "city_name",
+            "rawQuery": false,
+            "rawSql": "SELECT\n  $__timeGroupAlias(start_timestamp,1h),\n  city_name AS metric,\n  avg(avg_temperature_in_window) AS \"avg_temperature_in_window\"\nFROM weather_data\nGROUP BY 1,2\nORDER BY 1,2",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "avg_temperature_in_window"
+                  ],
+                  "type": "column"
+                },
+                {
+                  "params": [
+                    "avg"
+                  ],
+                  "type": "aggregate"
+                },
+                {
+                  "params": [
+                    "avg_temperature_in_window"
+                  ],
+                  "type": "alias"
+                }
+              ]
+            ],
+            "table": "weather_data",
+            "timeColumn": "start_timestamp",
+            "timeColumnType": "timestamptz",
+            "where": []
+          }
+        ],
+        "title": "Average Temperature",
+        "transparent": true,
+        "type": "barchart"
+      },
+      {
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "humidity"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 11,
+          "x": 0,
+          "y": 11
+        },
+        "id": 6,
+        "options": {
+          "displayMode": "lcd",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "text": {}
+        },
+        "pluginVersion": "8.4.5",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "postgres"
+            },
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "city_name",
+            "rawQuery": false,
+            "rawSql": "SELECT\n  start_timestamp AS \"time\",\n  city_name AS metric,\n  humidity\nFROM weather_data\nWHERE\n  $__timeFilter(start_timestamp)\nORDER BY 1,2",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "humidity"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "weather_data",
+            "timeColumn": "start_timestamp",
+            "timeColumnType": "timestamptz",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "title": "humidity",
+        "transparent": true,
+        "type": "bargauge"
+      },
+      {
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "Fahrenheit (°F)",
+              "axisPlacement": "left",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 14,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineStyle": {
+                "dash": [
+                  10,
+                  10
+                ],
+                "fill": "dash"
+              },
+              "lineWidth": 1,
+              "pointSize": 4,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "fahrenheit"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Karachi"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Islamabad"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-green",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Peshawar"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-orange",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Murree"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-purple",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Quetta"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-blue",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 13,
+          "x": 11,
+          "y": 11
+        },
+        "id": 4,
+        "options": {
+          "legend": {
+            "calcs": [
+              "firstNotNull",
+              "last",
+              "diff"
+            ],
+            "displayMode": "list",
+            "placement": "right"
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "postgres"
+            },
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "city_name",
+            "rawQuery": false,
+            "rawSql": "SELECT\n  start_timestamp AS \"time\",\n  city_name AS metric,\n  min_temperature_in_window\nFROM weather_data\nWHERE\n  $__timeFilter(start_timestamp)\nORDER BY 1,2",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "min_temperature_in_window"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "weather_data",
+            "timeColumn": "start_timestamp",
+            "timeColumnType": "timestamptz",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "title": "min_temperature",
+        "type": "timeseries"
+      },
+      {
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "Fahrenheit (°F)",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 15,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineStyle": {
+                "dash": [
+                  10,
+                  10
+                ],
+                "fill": "dash"
+              },
+              "lineWidth": 1,
+              "pointSize": 4,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "line"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "dark-red",
+                  "value": 100
+                }
+              ]
+            },
+            "unit": "fahrenheit"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Peshawar"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-orange",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Karachi"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Murree"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-purple",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Quetta"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-blue",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 11,
+          "x": 0,
+          "y": 17
+        },
+        "id": 2,
+        "options": {
+          "legend": {
+            "calcs": [
+              "firstNotNull",
+              "last",
+              "diff"
+            ],
+            "displayMode": "list",
+            "placement": "right"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.4.5",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "postgres"
+            },
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "city_name",
+            "rawQuery": false,
+            "rawSql": "SELECT\n  start_timestamp AS \"time\",\n  city_name AS metric,\n  max_temperature_in_window\nFROM weather_data\n",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "max_temperature_in_window"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "weather_data",
+            "timeColumn": "start_timestamp",
+            "timeColumnType": "timestamptz",
+            "where": []
+          }
+        ],
+        "title": "Max_temperature",
+        "type": "timeseries"
+      },
+      {
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "velocityms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 13,
+          "x": 11,
+          "y": 17
+        },
+        "id": 8,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "text": {}
+        },
+        "pluginVersion": "8.4.5",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "postgres"
+            },
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "city_name",
+            "rawQuery": false,
+            "rawSql": "SELECT\n  start_timestamp AS \"time\",\n  city_name AS metric,\n  wind_speed\nFROM weather_data\nORDER BY 1,2",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "wind_speed"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "weather_data",
+            "timeColumn": "start_timestamp",
+            "timeColumnType": "timestamptz",
+            "where": []
+          }
+        ],
+        "title": "Wind_speed",
+        "transparent": true,
+        "type": "gauge"
+      }
+    ],
+    "schemaVersion": 35,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "weather_dashboard",
+    "uid": "M5VTmX54z",
+    "version": 1,
+    "weekStart": ""
+  }
