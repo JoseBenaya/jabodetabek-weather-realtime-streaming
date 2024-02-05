@@ -44,8 +44,7 @@ def main(api_key):
     global kafka_topic
     while True:
         for city_name in ['Jakarta','Bogor','Depok','Tangerang','Bekasi']:
-            # api_key = os.getenv("WEATHER_API_KEY")
-            api_key = "c8ef4afa0a03a92329cadda8e5ba09ae"
+            api_key = os.getenv("WEATHER_API_KEY")
             weather_api_endpoint = f'http://api.openweathermap.org/data/2.5/weather?q={city_name}&units=imperial&appid={api_key}'
 
             json_message = weather_detail(weather_api_endpoint)

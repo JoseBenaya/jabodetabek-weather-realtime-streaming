@@ -85,12 +85,10 @@ def main():
         .trigger(processingTime="10 seconds") \
         .start()
     
-    db_host = 'ep-dark-morning-a165t2n5.ap-southeast-1.aws.neon.tech'
-    db_name = 'mydb'
-    db_url = f"jdbc:postgresql://{db_host}/{db_name}"
-    db_driver = "org.postgresql.Driver"
-    db_username = "josebenaya"
-    db_password = "5IjZWNCnH6Al"
+    db_url = os.getenv("POSTGRES_URL")
+    db_driver = os.getenv("POSTGRES_DRIVER")
+    db_username = os.getenv("POSTGRES_USERNAME")
+    db_password = os.getenv("POSTGRES_PASSWORD")
 
     def write_batch_to_db(batch_dataframe: DataFrame, batch_id):
         print(f"writing {batch_dataframe.count()} rows to {db_url}")
