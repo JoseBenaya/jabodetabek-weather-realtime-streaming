@@ -5,7 +5,7 @@ This project aims to analyze various events using data sourced from the OpenWeat
 The OpenWeather API is a weather data service that provides real-time and forecasted weather information for various locations worldwide. It offers access to a wide range of weather data, including temperature, humidity, wind speed, and more. Developers can integrate the OpenWeather API into their applications to retrieve up-to-date weather details, enabling them to enhance user experiences, build weather-related features, and make informed decisions based on weather conditions. To use the OpenWeather API, you need an API key, which is obtained by signing up on the OpenWeather website.
 
 ## Architecture
-![Architecture](streaming architecture.png)
+![Architecture](architecture.png)
 
 ## Tools
 ### Kafka
