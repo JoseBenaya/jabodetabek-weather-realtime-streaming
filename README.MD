@@ -7,6 +7,9 @@ The OpenWeather API is a weather data service that provides real-time and foreca
 ## Architecture
 ![Architecture](architecture.png)
 
+## Dashboard
+![Dashboard](dashboard.png)
+
 ## Tools
 ### Kafka
 Apache Kafka is a streaming data processing system that can be used to build real-time data architectures. In this project, Kafka serves as middleware to transmit weather data obtained from the OpenWeather API to the next data processing system (Pyspark).
